@@ -9,8 +9,10 @@ services:
       - MYSQL_DATABASE=std_services
   php-fpm:
     build:
-      context: . 
+      context: .
       dockerfile: ./php/Dockerfile
+    volumes:
+      - ./html:/usr/share/nginx/html
   web:
     build:
       context: .
@@ -20,3 +22,5 @@ services:
     depends_on:
       - cms-db
       - php-fpm
+    volumes:
+      - ./html:/usr/share/nginx/html
