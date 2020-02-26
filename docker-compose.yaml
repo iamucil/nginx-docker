@@ -8,7 +8,7 @@ services:
       - MYSQL_ROOT_PASSWORD=mySecretPassw0rd
       - MYSQL_DATABASE=std_services
     volumes:
-      - cms-db:/var/lib/mysql
+      - "/data/mariadb/stodioo.com:/var/lib/mysql"
   php-fpm:
     build:
       context: .
@@ -26,6 +26,3 @@ services:
       - php-fpm
     volumes:
       - ./html:/usr/share/nginx/html
-volumes:
-  cms-db:
-    external: true
