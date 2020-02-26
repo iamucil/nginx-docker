@@ -5,10 +5,10 @@ services:
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=mySecretPassw0rd
-      - MYSQL_DATABASE=std_services
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mariadb-root
     volumes:
       - "/data/mariadb/stodioo.com:/var/lib/mysql"
+      - "/run/secrets:/run/secrets"
   php-fpm:
     build:
       context: .
@@ -20,7 +20,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - "18080:8080"
+      - "8080:8080"
     depends_on:
       - cms-db
       - php-fpm
