@@ -1,28 +1,35 @@
 version: '3'
 services:
-  cms-db:
+  db:
     image: mariadb
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mariadb-root
+      - MYSQL_ROOT_PASSWORD=zx6PDeOtvapS7rv7
     volumes:
-      - "/data/mariadb/stodioo.com:/var/lib/mysql"
-      - "/run/secrets:/run/secrets"
+      - "./var/mariadb/data:/var/lib/mysql"
+  
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "38080:8080"
+  
   php-fpm:
     build:
       context: .
       dockerfile: ./php/Dockerfile
     volumes:
-      - ./html:/usr/share/nginx/html
-  web:
+      - ./app:/usr/share/nginx/html
+  
+  app:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./nginx/Dockerfile
     ports:
       - "8080:8080"
     depends_on:
       - cms-db
       - php-fpm
     volumes:
-      - ./html:/usr/share/nginx/html
+      - ./app:/usr/share/nginx/html
