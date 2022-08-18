@@ -1,3 +1,5 @@
 docker-compose.overrride.y*ml
 .vscode
 /var
+
+docker-compose.*.y[a]ml
